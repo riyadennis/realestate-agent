@@ -1,5 +1,6 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
+from crewai_tools import ScrapeWebsiteTool
 
 # Uncomment the following line to use an example of a custom tool
 # from realestate_agent.tools.custom_tool import MyCustomTool
@@ -12,6 +13,9 @@ class RealestateAgentCrew():
 	"""RealestateAgent crew"""
 	agents_config = 'config/agents.yaml'
 	tasks_config = 'config/tasks.yaml'
+	scrape_tool = ScrapeWebsiteTool(
+		website_url="https://www.rightmove.co.uk"
+	)
 
 	@agent
 	def realestate_agent(self) -> Agent:
@@ -29,10 +33,11 @@ class RealestateAgentCrew():
 		)
 
 	@task
-	def research_task(self) -> Task:
+	def realestate_task(self) -> Task:
 		return Task(
 			config=self.tasks_config['realestate_task'],
-			agent=self.realestate_agent()
+			agent=self.realestate_agent(),
+			tools=[self.scrape_tool]
 		)
 
 	@task
@@ -51,5 +56,6 @@ class RealestateAgentCrew():
 			tasks=self.tasks, # Automatically created by the @task decorator
 			process=Process.sequential,
 			verbose=2,
+			memory=True
 			# process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
 		)
