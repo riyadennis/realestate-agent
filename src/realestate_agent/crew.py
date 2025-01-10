@@ -14,9 +14,9 @@ class RealestateAgentCrew():
 	tasks_config = 'config/tasks.yaml'
 
 	@agent
-	def researcher(self) -> Agent:
+	def realestate_agent(self) -> Agent:
 		return Agent(
-			config=self.agents_config['researcher'],
+			config=self.agents_config['realestate_agent'],
 			# tools=[MyCustomTool()], # Example of custom tool, loaded on the beginning of file
 			verbose=True
 		)
@@ -31,8 +31,8 @@ class RealestateAgentCrew():
 	@task
 	def research_task(self) -> Task:
 		return Task(
-			config=self.tasks_config['research_task'],
-			agent=self.researcher()
+			config=self.tasks_config['realestate_task'],
+			agent=self.realestate_agent()
 		)
 
 	@task
