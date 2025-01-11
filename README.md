@@ -24,7 +24,7 @@ poetry install
 ### Customizing
 
 **Add your `OPENAI_API_KEY` and `POSTCODE` into the `.env`, 
-you can rename sample `.env.dist` file to .env and add the details**
+you can rename sample `env.dist` file to .env and add the details**
 
 
 - Modify `src/realestate_agent/config/agents.yaml` to define your agents
