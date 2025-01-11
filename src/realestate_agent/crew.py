@@ -45,7 +45,7 @@ class RealestateAgentCrew():
 		return Task(
 			config=self.tasks_config['reporting_task'],
 			agent=self.reporting_analyst(),
-			output_file='report.md'
+			output_file=self.inputs['postcode']
 		)
 
 	@crew
