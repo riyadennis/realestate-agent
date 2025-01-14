@@ -1,6 +1,13 @@
+# Warning control
+import warnings
+warnings.filterwarnings('ignore')
+import os
+
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 from crewai_tools import ScrapeWebsiteTool
+from .property_details import PropertyDetails
+
 
 # Uncomment the following line to use an example of a custom tool
 # from realestate_agent.tools.custom_tool import MyCustomTool
@@ -16,6 +23,7 @@ class RealestateAgentCrew():
 	scrape_tool = ScrapeWebsiteTool(
 		website_url="https://www.rightmove.co.uk"
 	)
+	os.environ["OPENAI_MODEL_NAME"] = 'gpt-3.5-turbo'
 
 	@agent
 	def realestate_agent(self) -> Agent:
@@ -45,7 +53,9 @@ class RealestateAgentCrew():
 		return Task(
 			config=self.tasks_config['reporting_task'],
 			agent=self.reporting_analyst(),
-			output_file='report.md'
+			human_input=True,
+			output_json=PropertyDetails,
+			output_file='report.json'
 		)
 
 	@crew
